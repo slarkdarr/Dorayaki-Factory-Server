@@ -18,6 +18,17 @@ async function getMultiple(page = 1) {
   };
 }
 
+async function getOne(username) {
+  const rows = await db.query(`SELECT * FROM users WHERE username = ?`, [
+    username,
+  ]);
+  const data = helper.emptyOrRows(rows);
+
+  return {
+    data,
+  };
+}
+
 async function create(user) {
   const salt = await bcrypt.genSalt(10);
   // now we set user password to hashed password
@@ -27,12 +38,7 @@ async function create(user) {
     (username, name, email, password)
       VALUES 
       (?, ?, ?, ?)`,
-    [
-      user.username,
-      user.name,
-      user.email,
-      user.password,
-    ]
+    [user.username, user.name, user.email, user.password]
   );
 
   let message = "Error in creating user";
@@ -47,4 +53,5 @@ async function create(user) {
 module.exports = {
   getMultiple,
   create,
+  getOne,
 };

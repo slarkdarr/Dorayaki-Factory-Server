@@ -16,6 +16,18 @@ router.get("/users", async function (req, res, next) {
   }
 });
 
+/**
+ * Get user by username
+ * */
+ router.get("/users/:username", async function (req, res, next) {
+  try {
+    res.json(await userControllers.getOne(req.params.username));
+  } catch (err) {
+    console.error(`Error while getting users `, err.message);
+    next(err);
+  }
+});
+
 /* POST user */
 router.post('/users', upload.none(), async function(req, res, next) {
   console.log(req.body);
