@@ -30,6 +30,7 @@ exports.create = async (req, res) => {
             err.message || "Some error occurred while creating the Ingredient.",
         });
       });
+    return;
   } catch (error) {
     console.log(error);
   }

@@ -60,7 +60,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./src/models");
 db.sequelize.query('SET FOREIGN_KEY_CHECKS = 0', { raw: true }).then ( function () {
-  db.sequelize.sync ().then ( function () {
+  db.sequelize.sync().then ( function () {
     console.log("Re-sync db.");
   });
 });
@@ -72,6 +72,7 @@ app.get("/", (req, res) => {
 
 require("./src/routes/user.routes")(app);
 require("./src/routes/ingredient.routes")(app);
+require("./src/routes/recipe.routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
