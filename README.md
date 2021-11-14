@@ -1,5 +1,11 @@
 # Dorayaki-Factory-Server
 
+## Instalation
+- Create .env based on .env.example, fill it accordingly
+- npm install
+- Make sure mysql running
+- npm start
+
 CREATE TABLE IF NOT EXISTS `dorayaki`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(25) UNIQUE NOT NULL,

@@ -1,7 +1,7 @@
 const db = require("../models");
 const User = db.users;
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 function generateAccessToken(username) {
   return jwt.sign(username, process.env.SECRET_JWT, { expiresIn: "5400s" });
@@ -9,17 +9,27 @@ function generateAccessToken(username) {
 
 // Create and Save a new User
 exports.create = async (req, res) => {
+  try {
+     // Get user input
+  const { username, name, email, password } = req.body;
   // Valusernameate request
   if (
-    !req.body.username ||
-    !req.body.name ||
-    !req.body.email ||
-    !req.body.password
+    !username ||
+    !name ||
+    !email ||
+    !password
   ) {
     res.status(400).send({
-      message: "Any field cannot be empty",
+      message: "Empty field not allowed",
     });
     return;
+  }
+
+  // check if user already exist
+  // Validate if user exist in our database
+  const oldUser = await User.findOne({ where: {username: username} });
+  if (oldUser) {
+    return res.status(409).send({message:"User Already Exist. Please Login"});
   }
 
   // Create a User
@@ -34,15 +44,12 @@ exports.create = async (req, res) => {
   };
 
   // Save User in the database
-  User.create(user)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
-      });
-    });
+  const newUser = await User.create(user);
+  const token = generateAccessToken({username: username});
+  res.status(201).json({user: newUser, token: token});
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Retrieve all Users from the database.
@@ -83,6 +90,13 @@ exports.findOne = (req, res) => {
 exports.login = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+
+  if(!username || !password){
+    res.status(400).send({
+      message: "Empty field not allowed",
+    });
+  }
+  
   User.findOne({ where: { username: username } })
     .then((data) => {
       if (data) {
