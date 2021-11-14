@@ -20,5 +20,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("./user.model.js")(sequelize, Sequelize);
+db.ingredients = require("./ingredient.model.js")(sequelize, Sequelize);
+db.recipes = require("./recipe.model.js")(sequelize, Sequelize);
+db.recipeIngredient = require("./recipeIngredient.model.js")(sequelize, Sequelize);
+db.ingredients.belongsToMany(db.recipes, {through: db.recipeIngredient});
+db.recipes.belongsToMany(db.ingredients, {through: db.recipeIngredient});
 
 module.exports = db;
