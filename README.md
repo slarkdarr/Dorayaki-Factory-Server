@@ -7,8 +7,20 @@
 - npm start
 
 
-## API DOCS
+## Table
+### Users
+id, username, name, email, password, createdAt, updatedAt
 
+### Ingredients
+id, name, stock, createdAt, updatedAt
+
+### Recipes
+id, name, description, createdAt, updatedAt
+
+### RecipeIngredients
+id, RecipeId, IngredientId, quantity, createdAt, updatedAt 
+
+## API DOCS
 ### User
 - [GET] `{{ route }}/api/users`
 - [GET] `{{ route }}/api/users/:username`

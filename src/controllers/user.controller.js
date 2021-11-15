@@ -121,21 +121,4 @@ exports.login = async (req, res) => {
         message: "Error retrieving User with username=" + username,
       });
     });
-
-  // if (userGet === null) {
-  //   res.status(404).send({
-  //     message: `Cannot find User with username=${username}.`,
-  //   });
-  // } else {
-  //   bcrypt.compare(password, userGet.password, function (err, result) {
-  //     if (result) {
-  //       const token = generateAccessToken({ username: username });
-  //       res.status(200).json(token);
-  //     } else {
-  //       res.status(403).send({
-  //         message: `Wrong password!`,
-  //       });
-  //     }
-  //   });
-  // }
 };
