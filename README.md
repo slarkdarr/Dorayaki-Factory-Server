@@ -6,13 +6,25 @@
 - Make sure mysql running
 - npm start
 
-CREATE TABLE IF NOT EXISTS `dorayaki`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(25) UNIQUE NOT NULL,
-  `name` VARCHAR(255) NULL,
-  `email` VARCHAR(255) NULL,
-  `password` VARCHAR(255) NOT NULL,
-  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`));a
 
-INSERT INTO `dorayaki`.`users` (username, name, email, password, created_at) VALUES ('admin', 'admin gantenk', 'admin@admin.com', ')
+## API DOCS
+
+### User
+- [GET] `{{ route }}/api/users`
+- [GET] `{{ route }}/api/users/:username`
+- [POST] `{{ route }}/api/users/login`
+- [POST] `{{ route }}/api/users`
+
+### Recipes
+- Need auth JWT
+- [GET] `{{ route }}/api/recipes`
+- [GET] `{{ route }}/api/recipes/:id`
+- [POST] `{{ route }}/api/recipes`
+
+### Ingredients
+- Need auth JWT
+- [GET] `{{ route }}/api/ingredients`
+- [GET] `{{ route }}/api/ingredients/:id`
+- [POST] `{{ route }}/api/ingredients`
+- [PUT] `{{ route }}/api/ingredients/:id`
+
