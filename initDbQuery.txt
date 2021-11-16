@@ -79,13 +79,11 @@ CREATE TABLE IF NOT EXISTS `dorayaki`.`users` (
 CREATE TABLE IF NOT EXISTS `dorayaki`.`requests` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NULL,
-  `recipe_id` INT NULL,
+  `recipe_name` VARCHAR(255) NULL,
   `status` VARCHAR(255) NULL,
-  `created_at` TIMESTAMP NULL,
   `quantity` INT NULL,
-	FOREIGN KEY (`recipe_id`)
-    REFERENCES `dorayaki`.`recipes` (`id`),
-  PRIMARY KEY (`id`))
+  `created_at` TIMESTAMP NULL,
+    PRIMARY KEY (`id`)),
 ENGINE = InnoDB;
 
 

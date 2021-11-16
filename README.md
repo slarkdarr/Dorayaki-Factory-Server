@@ -18,7 +18,10 @@ id, name, stock, createdAt, updatedAt
 id, name, description, createdAt, updatedAt
 
 ### RecipeIngredients
-id, RecipeId, IngredientId, quantity, createdAt, updatedAt 
+id, RecipeId, IngredientId, quantity, createdAt, updatedAt
+
+### Requests
+id, email, recipe_name, quantity, status, createdAt, updatedAt
 
 ## API DOCS
 ### User
