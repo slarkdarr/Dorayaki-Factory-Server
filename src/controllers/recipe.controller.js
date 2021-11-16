@@ -10,6 +10,7 @@ exports.create = async (req, res) => {
     const { name, description, ingredientsObject } = req.body;
     if (!name || !description || !ingredientsObject) {
       res.status(400).send({
+        status: "Error",
         message: "Empty field not allowed",
       });
       return;
@@ -33,9 +34,10 @@ exports.create = async (req, res) => {
           quantity: element.quantity,
         });
       });
-      res.send({ message: "New recipe created successfully" });
+      res.send({ status: "OK", message: "New recipe created successfully" });
     } else {
       return res.status(500).send({
+        status: "Error",
         message: err.message || "Some error occurred while creating Recipe.",
       });
     }
@@ -48,10 +50,11 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   Recipe.findAll({ include: Ingredient })
     .then((data) => {
-      res.send(data);
+      res.send({ status: "OK", data: data });
     })
     .catch((err) => {
       res.status(500).send({
+        status: "Error",
         message:
           err.message || "Some error occurred while retrieving Ingredients.",
       });
@@ -65,15 +68,17 @@ exports.findOne = (req, res) => {
   Recipe.findOne({ where: { id: id }, include: Ingredient })
     .then((data) => {
       if (data) {
-        res.send(data);
+        res.send({ status: "OK", data: data });
       } else {
         res.status(404).send({
+          status: "Error",
           message: `Cannot find Recipe with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
+        status: "Error",
         message: "Error retrieving Recipe with id=" + id,
       });
     });

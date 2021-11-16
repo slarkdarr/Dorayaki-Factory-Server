@@ -10,10 +10,10 @@ module.exports = (app) => {
   router.post("/", [verifyJwtToken, upload.none()], recipes.create);
 
   // Retrieve all recipes
-  router.get("/", [verifyJwtToken, upload.none()], recipes.findAll);
+  router.get("/", verifyJwtToken, recipes.findAll);
 
   // Retrieve a single Ingredient with id
-  router.get("/:id", [verifyJwtToken, upload.none()], recipes.findOne);
+  router.get("/:id", verifyJwtToken, recipes.findOne);
 
   app.use("/api/recipes", router);
 };

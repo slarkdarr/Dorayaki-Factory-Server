@@ -1,7 +1,7 @@
 const db = require("../models");
 const Ingredient = db.ingredients;
 
-// Create and Save a new User
+// Create and Save a new Ingredient
 exports.create = async (req, res) => {
   try {
     // Get user input
@@ -9,6 +9,7 @@ exports.create = async (req, res) => {
     // Valusernameate request
     if (!name || !stock) {
       res.status(400).send({
+        status: "Error",
         message: "Empty field not allowed",
       });
       return;
@@ -22,10 +23,11 @@ exports.create = async (req, res) => {
     // Save Ingredient in the database
     Ingredient.create(newIngredient)
       .then((data) => {
-        res.send(data);
+        res.send({ status: "OK", data: data });
       })
       .catch((err) => {
         res.status(500).send({
+          status: "Error",
           message:
             err.message || "Some error occurred while creating the Ingredient.",
         });
@@ -40,32 +42,35 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   Ingredient.findAll({})
     .then((data) => {
-      res.send(data);
+      res.send({ status: "OK", data: data });
     })
     .catch((err) => {
       res.status(500).send({
+        status: "Error",
         message:
           err.message || "Some error occurred while retrieving Ingredients.",
       });
     });
 };
 
-// Find a single User with an username
+// Find a single Ingredient with id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Ingredient.findOne({ where: { id: id } })
     .then((data) => {
       if (data) {
-        res.send(data);
+        res.send({ status: "OK", data: data });
       } else {
         res.status(404).send({
+          status: "Error",
           message: `Cannot find Ingredient with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
+        status: "Error",
         message: "Error retrieving Ingredient with id=" + id,
       });
     });
@@ -79,6 +84,7 @@ exports.update = (req, res) => {
 
   if (!stock) {
     res.status(400).send({
+      status: "Error",
       message: "No stock provided",
     });
     return;
@@ -93,16 +99,19 @@ exports.update = (req, res) => {
     .then((num) => {
       if (num == 1) {
         res.send({
+          status: "OK",
           message: "Ingredient was updated successfully.",
         });
       } else {
         res.send({
+          status: "Error",
           message: `Cannot update Ingredient with id=${id}. Maybe Ingredient was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
+        status: "Error",
         message: "Error updating Ingredient with id=" + id,
       });
     });

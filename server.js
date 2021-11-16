@@ -73,6 +73,7 @@ app.get("/", (req, res) => {
 require("./src/routes/user.routes")(app);
 require("./src/routes/ingredient.routes")(app);
 require("./src/routes/recipe.routes")(app);
+require("./src/routes/request.routes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
