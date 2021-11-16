@@ -43,3 +43,10 @@ id, email, recipe_name, quantity, status, createdAt, updatedAt
 - [POST] `{{ route }}/api/ingredients`
 - [PUT] `{{ route }}/api/ingredients/:id`
 
+
+## Todo
+- Validation accepted request (update stock di bahan apakah memenuhi)
+- Delete token jwt (logout) ?
+- Send email to admin
+- Send response soap
+- Receive response soap ?
