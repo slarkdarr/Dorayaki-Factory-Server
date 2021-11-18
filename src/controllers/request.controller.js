@@ -1,5 +1,7 @@
 const db = require("../models");
 const Request = db.requests;
+const Recipe = db.recipes;
+const Ingredient = db.ingredients;
 
 // Retrieve all Request from the database.
 exports.findAll = async (req, res) => {
@@ -78,18 +80,43 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
-
   // Get user input
   const status = req.body.status;
+  const recipe_name = req.body.recipe_name;
 
-  if (!status) {
+  if (!status || !recipe_name) {
     res.status(400).send({
       status: "Error",
       message: "No status provided",
     });
     return;
+  }
+  if (status === "accepted") {
+    recipe_data = await Recipe.findOne({
+      where: { name: recipe_name },
+      include: Ingredient,
+      required: true
+    });
+    if (!recipe_data) {
+      res.send({
+        status: "Error",
+        message: `Cannot update recipe empty`,
+      });
+    }
+    const requestInst = await Request.findOne({where: {id: id}});
+    const needs = requestInst['quantity'];
+    recipe_data['Ingredients'].forEach(element => {
+      let totalNeed = needs * element['RecipeIngredients']['quantity'];
+        if (element['stock'] < totalNeed){
+          res.send({
+            status: "Error",
+            message: `Cannot update ingredients not enough`,
+          });
+        }
+        Ingredient.update({stock: element['stock'] - totalNeed}, {where: {id: element['id']}})
+    });
   }
 
   Request.update(
