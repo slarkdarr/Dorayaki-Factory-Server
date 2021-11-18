@@ -20,10 +20,8 @@ exports.create = async (req, res) => {
       name: name,
       description: description,
     };
-
     // Save Ingredient in the database
     let newRecipe = await Recipe.create(recipeObj);
-
     if (newRecipe) {
       let ingredients = Array.prototype.slice.call(ingredientsObject);
       let recipeId = newRecipe.id;
@@ -42,7 +40,10 @@ exports.create = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    return res.status(500).send({
+      status: "Error",
+      message: `Name with  already exists`,
+    });
   }
 };
 
