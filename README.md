@@ -43,10 +43,16 @@ id, email, recipe_name, quantity, status, createdAt, updatedAt
 - [POST] `{{ route }}/api/ingredients`
 - [PUT] `{{ route }}/api/ingredients/:id`
 
+### Requests
+- Need auth JWT
+- [GET] `{{ route }}/api/requests`
+- [GET] `{{ route }}/api/requests/:id`
+- [POST] `{{ route }}/api/requests`
+- [PUT] `{{ route }}/api/requests/:id`
+
 
 ## Todo
-- Validation accepted request (update stock di bahan apakah memenuhi)
-- Delete token jwt (logout) ?
+- Validation dan logic accepted request (update stock di bahan apakah memenuhi)
 - Send email to admin
 - Send response soap
 - Receive response soap ?
