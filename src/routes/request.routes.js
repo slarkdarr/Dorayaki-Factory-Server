@@ -7,16 +7,16 @@ module.exports = (app) => {
   var router = require("express").Router();
 
   // Create a new Tutorial
-  router.post("/", [verifyJwtToken, upload.none()], requests.create);
+  router.post("/", [upload.none()], requests.create);
 
   // Retrieve all requests
-  router.get("/", verifyJwtToken, requests.findAll);
+  router.get("/", requests.findAll);
 
   // Retrieve a single Request with id
-  router.get("/:id", verifyJwtToken, requests.findOne);
+  router.get("/:id",  requests.findOne);
 
   // Update a Request with id
-  router.put("/:id", [verifyJwtToken, upload.none()], requests.update);
+  router.put("/:id", [upload.none()], requests.update);
 
   app.use("/api/requests", router);
 };

@@ -6,14 +6,14 @@ module.exports = (app) => {
 
   var router = require("express").Router();
 
-  // Create a new Ingredient
+  // Create a new Recipe
   router.post("/", [verifyJwtToken, upload.none()], recipes.create);
 
   // Retrieve all recipes
-  router.get("/", verifyJwtToken, recipes.findAll);
+  router.get("/", recipes.findAll);
 
-  // Retrieve a single Ingredient with id
-  router.get("/:id", verifyJwtToken, recipes.findOne);
+  // Retrieve a single Recipe with id
+  router.get("/:id", recipes.findOne);
 
   app.use("/api/recipes", router);
 };

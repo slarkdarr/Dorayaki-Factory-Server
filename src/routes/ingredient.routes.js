@@ -10,10 +10,10 @@ module.exports = (app) => {
   router.post("/", [verifyJwtToken, upload.none()], ingredients.create);
 
   // Retrieve all ingredients
-  router.get("/", verifyJwtToken, ingredients.findAll);
+  router.get("/", ingredients.findAll);
 
   // Retrieve a single Ingredient with id
-  router.get("/:id", verifyJwtToken, ingredients.findOne);
+  router.get("/:id", ingredients.findOne);
 
   // Update a Ingredient with id
   router.put("/:id", [verifyJwtToken, upload.none()], ingredients.update);
