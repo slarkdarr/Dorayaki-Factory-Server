@@ -2,11 +2,10 @@ module.exports = (app) => {
   const requests = require("../controllers/request.controller.js");
   const multer = require("multer");
   const upload = multer();
-  const verifyJwtToken = require("../middlewares/verifyJwtToken");
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Create a new Request
   router.post("/", [upload.none()], requests.create);
 
   // Retrieve all requests
