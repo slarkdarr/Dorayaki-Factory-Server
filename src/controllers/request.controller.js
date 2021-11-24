@@ -36,7 +36,8 @@ exports.findAll = async (req, res) => {
     //  Limit specified
     Request.findAll({
       where: {
-        createdAt: { [op.gte]: new Date(new Date() - 5 * 60 * 1000) }, // last 5 minutes
+        createdAt: { [op.gte]: new Date(new Date() - 30 * 60 * 1000) }, // last 30 minutes
+        status: "accepted"
       },
     })
       .then((data) => {
