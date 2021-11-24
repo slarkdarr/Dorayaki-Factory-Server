@@ -4,6 +4,8 @@ const Recipe = db.recipes;
 const Ingredient = db.ingredients;
 const User = db.users;
 const nodemailer = require("nodemailer");
+const Sequelize = require("sequelize");
+const op = Sequelize.Op;
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -16,17 +18,38 @@ const transporter = nodemailer.createTransport({
 
 // Retrieve all Request from the database.
 exports.findAll = async (req, res) => {
-  Request.findAll({})
-    .then((data) => {
-      res.send({ status: "OK", data: data });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        status: "Error",
-        message:
-          err.message || "Some error occurred while retrieving Requests.",
+  const { limit } = req.query;
+
+  if (!limit || limit !== "true") {
+    Request.findAll({})
+      .then((data) => {
+        res.send({ status: "OK", data: data });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          status: "Error",
+          message:
+            err.message || "Some error occurred while retrieving Requests.",
+        });
       });
-    });
+  } else {
+    //  Limit specified
+    Request.findAll({
+      where: {
+        createdAt: { [op.gte]: new Date(new Date() - 5 * 60 * 1000) }, // last 5 minutes
+      },
+    })
+      .then((data) => {
+        res.send({ status: "OK", data: data });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          status: "Error",
+          message:
+            err.message || "Some error occurred while retrieving Requests.",
+        });
+      });
+  }
 };
 
 // Find a single Request by id

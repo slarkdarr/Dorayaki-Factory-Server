@@ -45,7 +45,7 @@ id, email, recipe_name, quantity, status, createdAt, updatedAt
 
 ### Requests
 - Need auth JWT
-- [GET] `{{ route }}/api/requests`
+- [GET] `{{ route }}/api/requests?limit=[true,false]` true if limit to last 5 minutes
 - [GET] `{{ route }}/api/requests/:id`
 - [POST] `{{ route }}/api/requests`
 - [PUT] `{{ route }}/api/requests/:id`
