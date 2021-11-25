@@ -36,7 +36,7 @@ exports.findAll = async (req, res) => {
     //  Limit specified
     Request.findAll({
       where: {
-        createdAt: { [op.gte]: new Date(new Date() - 30 * 60 * 1000) }, // last 30 minutes
+        updatedAt: { [op.gte]: new Date(new Date() - 30 * 60 * 1000) }, // last 30 minutes
         status: "accepted"
       },
     })
@@ -151,11 +151,13 @@ exports.update = async (req, res) => {
       include: Ingredient,
       required: true,
     });
+
     if (!recipe_data) {
       res.send({
         status: "Error",
-        message: `Cannot update recipe empty`,
+        message: `Cannot update recipes with name not found`,
       });
+      return;
     }
     const requestInst = await Request.findOne({ where: { id: id } });
     const needs = requestInst["quantity"];
@@ -166,6 +168,7 @@ exports.update = async (req, res) => {
           status: "Error",
           message: `Cannot update ingredients not enough`,
         });
+        return;
       }
       Ingredient.update(
         { stock: element["stock"] - totalNeed },
