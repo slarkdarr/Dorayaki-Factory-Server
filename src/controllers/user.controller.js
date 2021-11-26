@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 function generateAccessToken(username) {
-  return jwt.sign(username, process.env.SECRET_JWT, { expiresIn: "5400s" });
+  return jwt.sign(username, process.env.SECRET_JWT, { expiresIn: "10000s" });
 }
 
 // Create and Save a new User
