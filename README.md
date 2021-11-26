@@ -53,3 +53,9 @@ id, ip, endpoint, createdAt
 
 
 ## Pembagian tugas
+- Setup 13519197
+- Model and skema 13519197
+- Get Post Update 13519197
+- Nodemailer 13519107
+- meminta daftar varian 13519065
+- memberikan daftar variant 13519065
